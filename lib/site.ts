@@ -1,13 +1,13 @@
 export const site = {
   name: 'Intercity Riders',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://intercityriders.example',
-  phone: process.env.NEXT_PUBLIC_PHONE || '',
-  email: process.env.NEXT_PUBLIC_EMAIL || '',
+  phone: process.env.NEXT_PUBLIC_PHONE || '+919944942223',
+  email: process.env.NEXT_PUBLIC_EMAIL || 'info@onewaytaxi.com',
   location: 'Tamil Nadu, India',
 };
 export const navigation = [
-  ['Home', '/'], ['Outstation', '/services'], ['Airport', '/airport-transfers'],
-  ['Routes', '/routes'], ['Tariff', '/tariff'], ['About', '/about'],
+  ['HOME', '/'], ['ABOUT', '/about-us'], ['SERVICES', '/services'],
+  ['TARIFF', '/tariff'], ['ROUTES', '/service-routes'], ['CONTACT US', '/contact-us'],
 ] as const;
 export const journeys = [
   { from: 'Chennai', to: 'Bengaluru', note: 'City lights to new possibilities', tag: 'CITY TO CITY', image: '/images/destination-1.webp' },
@@ -22,3 +22,16 @@ export function bookingLink(from?: string, to?: string, trip = 'oneway') {
   if (to) search.set('drop', to);
   return `/booking?${search}`;
 }
+
+export const footerCities = [
+  { name: 'Chennai', pickup: 'Chennai, Tamil Nadu, India' },
+  { name: 'Coimbatore', pickup: 'Coimbatore, Tamil Nadu, India' },
+  { name: 'Bangalore', pickup: 'Bengaluru, Karnataka, India' },
+  { name: 'Madurai', pickup: 'Madurai, Tamil Nadu, India' },
+  { name: 'Trichy', pickup: 'Tiruchirappalli, Tamil Nadu, India' },
+];
+export const socialLinks = [
+  { label: 'Facebook', href: 'https://facebook.com/onewaytaxi' },
+  { label: 'Twitter', href: 'https://twitter.com/onewaytaxi' },
+  { label: 'Instagram', href: 'https://instagram.com/onewaytaxi' },
+];

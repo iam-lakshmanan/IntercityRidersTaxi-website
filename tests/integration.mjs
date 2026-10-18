@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-const base = process.env.INTERCITY_TEST_URL || 'http://127.0.0.1:3011';
+const base = process.env.INTERCITY_TEST_URL || 'http://localhost:3011';
 const form = { tripType: 'oneway', pickup: 'Coimbatore', drop: 'Chennai', pickupDate: '2099-01-10', pickupTime: '10:30', vehicle: 'sedan', customerName: 'Integration Test', mobile: '9876543210', email: '', womanAlone: false, seniorCitizen: false, travellingWithInfant: false, extraLuggage: false };
 async function post(path, data) {
   const response = await fetch(`${base}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify(data) });

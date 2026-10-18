@@ -4,7 +4,7 @@ A separate Next.js 16 / React 19 taxi enquiry website with a navy and cyan visua
 
 ## Run locally
 
-Use Node 20.9–24. Run `npm ci`, copy `.env.example` to `.env.local`, configure the required services, then run `npm run dev`. Open http://localhost:3010.
+Use Node 20.9–24. Run `npm ci`, copy `.env.example` to `.env.local`, configure the required services, then run `npm run dev`. Open http://localhost:3000.
 
 Commands: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm start`.
 
@@ -33,6 +33,8 @@ Requests have schema validation, body-size limits, same-origin checks, external-
 
 External services are not configured by default. This is intentional: no production credentials were copied. No test messages should be sent to real booking channels. Unit tests mock Telegram; use isolated test accounts for integration testing.
 
+`tests/integration.mjs` checks the actual API handlers against an isolated server on port 3011. Start that server with `tests/mock-upstreams.cjs` preloaded, `INTERCITY_TEST_UPSTREAMS=1`, fake Google/Telegram values and a test signing secret. Never enable the mock in normal operation. It blocks external HTTPS traffic and mocks Maps and Telegram. Run `node tests/integration.mjs` after starting it. Verified scenarios include server route calculation, ignoring client fare manipulation, signed-quote validation, duplicate submissions, manual enquiries and contact delivery.
+
 ## Design and assets
 
 Palette: #0B1F33, #123A5A, #00A8E8, #F5F8FA. Layouts include editorial service panels, destination photography, fleet cards, route lists and fare tables. Motion respects reduced-motion preferences. Text remains readable before animations run. System fonts avoid build-time font-network dependencies.
@@ -41,5 +43,5 @@ Hero and airport photographs: AI-generated for this project. Destination and exa
 
 ## Deployment
 
-Build with `npm run build`; run with `npm start` (port 3010). Next.js standalone output is enabled. The Dockerfile accepts public build-time variables; pass server-only secrets at runtime. Place behind HTTPS, validate the contact details/domain, and test Maps and Telegram with isolated test accounts before launch. The service worker is network-only; offline booking is not supported.
+Build with `npm run build`; run with `npm start` (port 3000). Next.js standalone output is enabled. The Dockerfile accepts public build-time variables; pass server-only secrets at runtime. Place behind HTTPS, validate the contact details/domain, and test Maps and Telegram with isolated test accounts before launch. The service worker is network-only; offline booking is not supported.
 

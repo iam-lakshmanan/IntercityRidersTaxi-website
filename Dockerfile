@@ -11,10 +11,10 @@ ENV NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$NEXT_PUBLIC_GOOGLE_MAPS_API_KEY NEXT_PUBLIC
 RUN npm run build
 FROM node:22-alpine AS run
 WORKDIR /app
-ENV NODE_ENV=production PORT=3010 HOSTNAME=0.0.0.0
+ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0
 COPY --from=build --chown=node:node /app/.next/standalone ./
 COPY --from=build --chown=node:node /app/.next/static ./.next/static
 COPY --from=build --chown=node:node /app/public ./public
 USER node
-EXPOSE 3010
+EXPOSE 3000
 CMD ["node", "server.js"]
