@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Header, Footer, InstallPrompt } from '@/components/shell';
+import { Header, Footer } from '@/components/shell';
 import { MotionProvider } from '@/components/motion';
 import { site } from '@/lib/site';
 import './globals.css';
@@ -14,5 +14,5 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#0B1F33', width: 'device-width', initialScale: 1 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className="site-shell"><MotionProvider><a className="skip-link" href="#main-content">Skip to content</a><Header /><main id="main-content" className="site-main">{children}</main><Footer /><InstallPrompt /></MotionProvider></body></html>;
+  return <html lang="en"><body className="site-shell"><MotionProvider><a className="skip-link" href="#main-content">Skip to content</a><Header /><main id="main-content" className="site-main">{children}</main><Footer /></MotionProvider></body></html>;
 }

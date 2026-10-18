@@ -8,7 +8,7 @@ import { navigation, site, footerCities, socialLinks, bookingLink } from '@/lib/
 import { Reveal } from './motion';
 
 export function Logo() {
-  return <span className="brand-logo"><Image src="/images/car-logo3.png" alt="Intercity Riders — The one you can trust" width={3692} height={1120} sizes="(max-width: 640px) 164px, 204px" priority /></span>;
+  return <span className="brand-logo"><Image src="/images/car-logo3-transparent.png" alt="Intercity Riders — The one you can trust" width={3692} height={1120} sizes="(max-width: 640px) 164px, 204px" priority /></span>;
 }
 
 export function Header() {
@@ -16,12 +16,13 @@ export function Header() {
   const dialog = useRef<HTMLDialogElement>(null);
   const active = (href: string) => pathname === href || ({ '/about': '/about-us', '/contact': '/contact-us', '/routes': '/service-routes' } as Record<string, string>)[pathname] === href;
   return <>
-    <div className="topbar"><div className="site-container"><span><span className="status-dot" /> YOUR NEXT CHAPTER STARTS ON THE ROAD</span><Link href="/contact-us">Let’s plan your journey <ArrowUpRight size={12} /></Link></div></div>
     <header className="header"><div className="site-container header-inner">
       <Link href="/" aria-label="Intercity Riders home"><Logo /></Link>
       <nav className="desktop-nav" aria-label="Main navigation">{navigation.map(([name, href]) => <Link key={href} href={href} aria-current={active(href) ? 'page' : undefined} className={active(href) ? 'active' : ''}>{name}</Link>)}</nav>
-      <a href={`tel:${site.phone}`} className="button button-small header-cta"><Phone size={16} /> Call us</a>
-      <button className="icon-button menu-toggle" aria-label="Open navigation" aria-haspopup="dialog" onClick={() => dialog.current?.showModal()}><Menu /></button>
+      <div className="header-actions">
+        <a href={`tel:${site.phone}`} className="button button-small header-cta"><Phone size={16} /> Call us</a>
+        <button className="icon-button menu-toggle" aria-label="Open navigation" aria-haspopup="dialog" onClick={() => dialog.current?.showModal()}><Menu /></button>
+      </div>
     </div></header>
     <dialog className="mobile-menu" ref={dialog} aria-label="Site navigation"><div className="mobile-menu-top"><Logo /><button className="icon-button" aria-label="Close navigation" onClick={() => dialog.current?.close()}><X /></button></div><nav aria-label="Mobile navigation">{navigation.map(([name, href]) => <Link key={href} href={href} aria-current={active(href) ? 'page' : undefined} onClick={() => dialog.current?.close()}>{name}<ArrowUpRight size={20} /></Link>)}</nav><a href={`tel:${site.phone}`} className="button mobile-call"><Phone size={17} /> Call us</a><p>Your journey. Our priority.</p></dialog>
   </>;
@@ -44,15 +45,4 @@ export function Footer() {
     </div></footer>
     <div className="floating-contacts"><a href={`tel:${site.phone}`} className="floating-phone" aria-label="Call Intercity One Way Taxi"><Phone size={22} /></a><a href={`https://wa.me/${site.phone.replace(/\D/g, '')}`} className="floating-whatsapp" target="_blank" rel="noreferrer" aria-label="Message Intercity One Way Taxi on WhatsApp"><MessageCircle size={24} /></a></div>
   </>;
-}
-
-type InstallEvent = Event & { prompt: () => Promise<void> };
-export function InstallPrompt() {
-  const [prompt, setPrompt] = useState<InstallEvent | null>(null);
-  useEffect(() => {
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
-    const handler = (event: Event) => { event.preventDefault(); setPrompt(event as InstallEvent); };
-    window.addEventListener('beforeinstallprompt', handler); return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-  return prompt ? <button className="install-prompt" onClick={async () => { await prompt.prompt(); setPrompt(null); }}>Add Riders to your home screen <ArrowUpRight size={15} /></button> : null;
 }
