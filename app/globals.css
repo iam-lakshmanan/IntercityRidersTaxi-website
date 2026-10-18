@@ -771,7 +771,7 @@ body.site-shell { inline-size:100%; min-inline-size:0; max-inline-size:100%; ove
 .legacy-footer-grid a { font-size:14px; }
 .footer-privacy { margin-top:20px!important; font-size:12px!important; }
 .footer-bottom a { color:#d2e5f2; font-weight:650; }
-.floating-contacts a { position:fixed; bottom:max(20px,env(safe-area-inset-bottom)); z-index:35; display:flex; align-items:center; justify-content:center; width:50px; height:50px; border-radius:50%; box-shadow:0 5px 20px #07172530; }
+.floating-contacts a { position:fixed; bottom:max(34px,calc(env(safe-area-inset-bottom) + 18px)); z-index:35; display:flex; align-items:center; justify-content:center; width:50px; height:50px; border-radius:50%; box-shadow:0 5px 20px #07172530; }
 .floating-phone { left:20px; background:var(--cyan); color:var(--navy); }
 .floating-whatsapp { right:20px; background:#25d366; color:#083b23; }
 .install-prompt { bottom:80px; }
@@ -814,10 +814,11 @@ body.site-shell { inline-size:100%; min-inline-size:0; max-inline-size:100%; ove
   .legacy-footer-grid { grid-template-columns:minmax(0,1fr); gap:30px; }
   .legacy-footer-grid>.reveal { grid-column:auto; }
   .legacy-footer-grid .brand-logo { width:204px; }
-  .floating-contacts a { width:44px; height:44px; }
+  .floating-contacts a { width:44px; height:44px; bottom:max(28px,calc(env(safe-area-inset-bottom) + 14px)); }
   .floating-phone { left:12px; }
   .floating-whatsapp { right:12px; }
-  .footer-bottom { padding-bottom:80px; }
+  .footer-bottom { align-items:center; justify-content:center; text-align:center; padding-bottom:88px; }
+  .footer-bottom>span { width:100%; }
 }
 @media(max-width:360px) { .footer-city-grid { grid-template-columns:minmax(0,1fr); } }
 
@@ -916,3 +917,90 @@ body.site-shell { inline-size:100%; min-inline-size:0; max-inline-size:100%; ove
   .booking-map-route { padding:18px 18px 10px; }
   .booking-map-status { margin-inline:18px; }
 }
+
+
+/* Places API (New) autocomplete. */
+.place-autocomplete-new { position:relative; overflow:visible; }
+.place-autocomplete-new>input { position:relative; z-index:1; }
+.place-suggestion-loading { position:absolute; z-index:2; right:15px; top:18px; width:16px; height:16px; border:2px solid #c9dbe6; border-top-color:var(--cyan); border-radius:50%; animation:spin .7s linear infinite; pointer-events:none; }
+.place-suggestion-list { position:absolute; z-index:45; left:0; right:0; top:calc(100% + 7px); overflow:hidden; border:1px solid #d5e2ea; border-radius:8px; background:white; box-shadow:0 16px 35px rgba(7,29,50,.16); }
+.place-suggestion-list button { display:flex; align-items:flex-start; gap:11px; width:100%; padding:12px 14px; border:0; border-bottom:1px solid #edf2f5; background:white; color:var(--navy); text-align:left; cursor:pointer; transition:background .18s,color .18s; }
+.place-suggestion-list button:hover,.place-suggestion-list button.active { background:#eef9fd; color:#007eae; }
+.place-suggestion-list button>svg { flex:0 0 auto; margin-top:3px; color:var(--cyan); }
+.place-suggestion-list button>span,.place-suggestion-list button strong,.place-suggestion-list button small { display:block; min-width:0; }
+.place-suggestion-list button strong { overflow:hidden; font-size:14px; line-height:1.35; text-overflow:ellipsis; white-space:nowrap; }
+.place-suggestion-list button small { overflow:hidden; margin-top:3px; color:#6f8495; font-size:12px; line-height:1.35; text-overflow:ellipsis; white-space:nowrap; }
+.place-suggestion-credit { padding:7px 14px; background:#f8fafc; color:#738796; font-size:10px; font-weight:650; letter-spacing:.03em; text-align:right; }
+@media(max-width:640px) { .place-suggestion-list { position:fixed; left:16px; right:16px; top:auto; bottom:max(16px,env(safe-area-inset-bottom)); max-height:48vh; overflow:auto; border-radius:10px; } .place-suggestion-list button { padding:14px; } }
+
+
+/* Polished airport, date and time fields. */
+.airport-select { position:relative; }
+.airport-select-trigger { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:11px; width:100%; min-height:54px; padding:0 14px; border:1px solid #d8e4ec; border-radius:7px; background:#fbfdfe; color:var(--navy); text-align:left; cursor:pointer; transition:border-color .2s,background .2s,box-shadow .2s; }
+.airport-select-trigger:hover { border-color:#a9c9da; background:white; }
+.airport-select-trigger:focus-visible,.airport-select-trigger.open { outline:0; border-color:var(--cyan); background:white; box-shadow:0 0 0 3px rgba(0,168,232,.12); }
+.airport-select-trigger[data-invalid=true] { border-color:#c95656; }
+.airport-select-trigger[data-invalid=true]:focus-visible,.airport-select-trigger[data-invalid=true].open { box-shadow:0 0 0 3px rgba(201,86,86,.1); }
+.airport-select-icon { display:grid; place-items:center; width:32px; height:32px; border-radius:6px; background:#e9f8fd; color:#008fbe; }
+.airport-select-placeholder { overflow:hidden; color:#687d8d; text-overflow:ellipsis; white-space:nowrap; }
+.airport-select-value { overflow:hidden; color:var(--navy); font-weight:600; text-overflow:ellipsis; white-space:nowrap; }
+.airport-select-chevron { color:#5f7789; transition:transform .2s; }
+.airport-select-trigger.open .airport-select-chevron { transform:rotate(180deg); }
+.airport-select-options { position:absolute; z-index:46; left:0; right:0; top:calc(100% + 7px); overflow:auto; max-height:292px; padding:7px; border:1px solid #d4e2eb; border-radius:9px; background:white; box-shadow:0 18px 42px rgba(7,29,50,.18); }
+.airport-select-options>button { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:10px; width:100%; padding:11px 10px; border:0; border-radius:6px; background:white; color:var(--navy); text-align:left; cursor:pointer; }
+.airport-select-options>button:hover,.airport-select-options>button.active { background:#eef9fd; color:#007fae; }
+.airport-select-options>button[aria-selected=true] { background:#e4f6fc; color:#00749f; }
+.airport-select-options>button>span { display:grid; place-items:center; width:28px; height:28px; border-radius:5px; background:#f0f8fb; color:#00a0d4; }
+.airport-select-options>button strong { overflow:hidden; font-size:14px; font-weight:650; text-overflow:ellipsis; white-space:nowrap; }
+.date-time-control { position:relative; }
+.date-time-control>svg { position:absolute; z-index:2; left:14px; top:50%; color:#0099cc; pointer-events:none; transform:translateY(-50%); }
+.previous-form-flow .date-time-control>input { min-height:54px; padding:12px 45px 12px 43px!important; color-scheme:light; }
+.date-time-control>input::-webkit-datetime-edit { display:flex; align-items:center; min-height:26px; padding:0; }
+.date-time-control>input::-webkit-datetime-edit-fields-wrapper { padding:0; }
+.date-time-control>input::-webkit-calendar-picker-indicator { width:20px; height:20px; margin:0; padding:0; opacity:.75; cursor:pointer; }
+.date-time-control>input:focus::-webkit-calendar-picker-indicator { opacity:1; }
+@media(max-width:640px) { .airport-select-options { position:fixed; left:16px; right:16px; top:auto; bottom:max(16px,env(safe-area-inset-bottom)); max-height:52vh; padding:8px; border-radius:11px; } .airport-select-options>button { padding:13px 11px; } }
+
+
+/* Custom date and time pickers. */
+.custom-picker { position:relative; }
+.picker-trigger { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:11px; width:100%; min-height:54px; padding:0 14px; border:1px solid #d8e4ec; border-radius:7px; background:#fbfdfe; color:var(--navy); text-align:left; cursor:pointer; transition:border-color .2s,background .2s,box-shadow .2s; }
+.picker-trigger:hover { border-color:#a9c9da; background:white; }
+.picker-trigger:focus-visible,.picker-trigger[aria-expanded=true] { outline:0; border-color:var(--cyan); background:white; box-shadow:0 0 0 3px rgba(0,168,232,.12); }
+.picker-trigger[data-invalid=true] { border-color:#c95656; }
+.picker-trigger-icon { display:grid; place-items:center; width:32px; height:32px; border-radius:6px; background:#e9f8fd; color:#0099cc; }
+.picker-placeholder { color:#687d8d; }
+.picker-value { color:var(--navy); font-weight:650; }
+.picker-chevron { color:#5f7789; transition:transform .2s; }
+.picker-chevron.open { transform:rotate(180deg); }
+.date-picker-panel,.time-picker-panel { position:absolute; z-index:48; top:calc(100% + 7px); left:0; width:min(360px,calc(100vw - 32px)); padding:15px; border:1px solid #d4e2eb; border-radius:10px; background:white; box-shadow:0 20px 45px rgba(7,29,50,.2); }
+.date-picker-header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:13px; }
+.date-picker-header>strong { font-size:16px; }
+.date-picker-header>span { display:flex; gap:5px; }
+.date-picker-header button { display:grid; place-items:center; width:34px; height:34px; border:1px solid #deE8ee; border-radius:6px; background:white; color:var(--navy); cursor:pointer; }
+.date-picker-header button:hover { border-color:#8bd3f0; background:#eef9fd; color:#008fbe; }
+.date-picker-weekdays,.date-picker-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.date-picker-weekdays { margin-bottom:5px; color:#708596; font-size:11px; font-weight:750; text-align:center; }
+.date-picker-grid button { aspect-ratio:1; min-width:0; border:0; border-radius:7px; background:white; color:var(--navy); font-size:13px; font-weight:600; cursor:pointer; }
+.date-picker-grid button:hover:not(:disabled) { background:#eaf8fd; color:#007da9; }
+.date-picker-grid button.outside { color:#9eacb6; }
+.date-picker-grid button.today { box-shadow:inset 0 0 0 1px #78d1f1; color:#007da9; }
+.date-picker-grid button.selected { background:var(--navy); color:white; box-shadow:none; }
+.date-picker-grid button:disabled { color:#c8d1d7; background:transparent; cursor:not-allowed; }
+.picker-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:13px -15px -15px; padding:11px 15px; border-top:1px solid #e7eef2; background:#f8fbfc; border-radius:0 0 10px 10px; }
+.picker-actions button { padding:7px 10px; border:0; border-radius:5px; background:transparent; color:#008bbe; font-size:13px; font-weight:700; cursor:pointer; }
+.picker-actions button:hover:not(:disabled) { background:#e6f6fc; }
+.picker-actions button:disabled { color:#aab8c1; cursor:not-allowed; }
+.picker-actions .picker-confirm { padding-inline:14px; background:var(--cyan); color:var(--navy); }
+.time-picker-title>div { display:flex; align-items:center; gap:10px; padding-bottom:13px; border-bottom:1px solid #e7eef2; color:#0099cc; }
+.time-picker-title span,.time-picker-title strong,.time-picker-title small { display:block; }
+.time-picker-title strong { color:var(--navy); font-size:15px; }
+.time-picker-title small { margin-top:2px; color:#718696; font-size:12px; }
+.time-picker-labels { display:grid; grid-template-columns:1fr 86px; gap:12px; margin:13px 0 7px; color:#718696; font-size:10px; font-weight:750; letter-spacing:.1em; text-align:center; }
+.time-picker-columns { display:grid; grid-template-columns:1fr 86px; gap:12px; }
+.time-picker-hours { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; max-height:184px; overflow:auto; padding-right:4px; }
+.time-picker-minutes { display:grid; grid-template-columns:1fr; gap:5px; align-content:start; }
+.time-picker-columns button { min-height:36px; border:1px solid #e0e9ee; border-radius:6px; background:white; color:var(--navy); font-size:13px; font-weight:650; cursor:pointer; }
+.time-picker-columns button:hover { border-color:#8bd3f0; background:#eef9fd; }
+.time-picker-columns button.selected { border-color:var(--cyan); background:var(--navy); color:white; }
+@media(max-width:640px) { .date-picker-panel,.time-picker-panel { position:fixed; left:16px; right:16px; top:auto; bottom:max(16px,env(safe-area-inset-bottom)); width:auto; max-height:78vh; overflow:auto; border-radius:12px; } .date-picker-grid button { min-height:38px; aspect-ratio:auto; } }

@@ -12,9 +12,7 @@ Commands: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm
 
 - Update the provisional brand in `lib/site.ts` and matching metadata/logos. Set `NEXT_PUBLIC_SITE_URL` to the real domain. The `.example` domain is deliberately a placeholder.
 - Set real `NEXT_PUBLIC_PHONE` (international format, e.g. +91...) and `NEXT_PUBLIC_EMAIL`. Contact details fall back to the original booking phone and email; environment values can override them.
-- Browser Maps key: enable Maps JavaScript API and Places API, restrict to website origins. This public key is intentionally browser-visible.
-- Server Maps key: enable Directions API and restrict to the deployment server IP. This key verifies distance independently of browser data.
-- Set `QUOTE_SIGNING_SECRET` to a cryptographically random string of at least 32 characters.
+- Google Maps key: `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is used for Maps JavaScript, Places and Directions. Enable all three APIs for this key and allow the site origins used in development and production.
 - Telegram bot token and chat ID are server-only. Never commit credentials. Both ride requests and the contact form need these values to deliver messages.
 - Public environment values are embedded during build; rebuild after changing them.
 - Configure a reverse proxy that overwrites an authenticated client IP header, then set `TRUSTED_IP_HEADER` to that header name. Without it, the application uses a shared per-process rate bucket. Do not trust a header clients can spoof.
@@ -23,9 +21,9 @@ Commands: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm
 
 One-way / airport per km: Sedan ₹15, Prime Sedan ₹15, SUV ₹20, Prime SUV ₹24. Round trip: ₹14, ₹14, ₹19, ₹22 respectively. Minimum billable distance is 130 km one way / airport and 250 km round trip. Round-trip travel distance and time are doubled. Fixed driver allowance: ₹400. Tolls, permits, hill and carrier charges are extra where applicable. No multi-day pricing is assumed: confirm extended itineraries manually.
 
-`lib/fare.mjs` is the single rate and calculation source. `lib/validation.mjs` validates both browser and API inputs. Quotes last 15 minutes, include an HMAC signature and a hash of the validated journey, and are recalculated at submission. The API ignores browser-supplied totals. When routing is unavailable, customers may request a manual quote; the UI does not invent a fare.
+`lib/fare.mjs` is the single rate and calculation source. `lib/validation.mjs` validates both browser and API inputs. Google Maps calculates the driving route in the browser, and the server recalculates the fare from the route distance when the customer confirms the booking.
 
-The estimate page can refresh from session storage. Drafts expire after two hours. Successful submissions replace personal draft details with a receipt reference. Delivery success means the request reached the team, not that a car is reserved. No payments, driver dispatch, accounts, reservation database or admin dashboard are included.
+The booking form first sends an enquiry to Telegram, then opens the estimate page. Confirm Booking sends the calculated fare and journey details to Telegram and shows confirmation in the same estimate panel. Drafts expire after two hours.
 
 ## Reliability and production limits
 
@@ -33,7 +31,7 @@ Requests have schema validation, body-size limits, same-origin checks, external-
 
 External services are not configured by default. This is intentional: no production credentials were copied. No test messages should be sent to real booking channels. Unit tests mock Telegram; use isolated test accounts for integration testing.
 
-`tests/integration.mjs` checks the actual API handlers against an isolated server on port 3011. Start that server with `tests/mock-upstreams.cjs` preloaded, `INTERCITY_TEST_UPSTREAMS=1`, fake Google/Telegram values and a test signing secret. Never enable the mock in normal operation. It blocks external HTTPS traffic and mocks Maps and Telegram. Run `node tests/integration.mjs` after starting it. Verified scenarios include server route calculation, ignoring client fare manipulation, signed-quote validation, duplicate submissions, manual enquiries and contact delivery.
+`tests/integration.mjs` checks the actual API handlers against an isolated server on port 3011. Start that server with `tests/mock-upstreams.cjs` preloaded, `INTERCITY_TEST_UPSTREAMS=1` and fake Telegram values. Never enable the mock in normal operation. Run `node tests/integration.mjs` after starting it. The checks cover fare calculation, the initial enquiry, booking confirmation, duplicate submissions, invalid route metrics and contact delivery.
 
 ## Design and assets
 
