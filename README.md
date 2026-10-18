@@ -11,7 +11,7 @@ Commands: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm
 ## Configuration
 
 - Update the provisional brand in `lib/site.ts` and matching metadata/logos. Set `NEXT_PUBLIC_SITE_URL` to the real domain. The `.example` domain is deliberately a placeholder.
-- Set real `NEXT_PUBLIC_PHONE` (international format, e.g. +91...) and `NEXT_PUBLIC_EMAIL`. Contact links are omitted until configured.
+- Set real `NEXT_PUBLIC_PHONE` (international format, e.g. +91...) and `NEXT_PUBLIC_EMAIL`. Contact details fall back to the original booking phone and email; environment values can override them.
 - Browser Maps key: enable Maps JavaScript API and Places API, restrict to website origins. This public key is intentionally browser-visible.
 - Server Maps key: enable Directions API and restrict to the deployment server IP. This key verifies distance independently of browser data.
 - Set `QUOTE_SIGNING_SECRET` to a cryptographically random string of at least 32 characters.
@@ -39,9 +39,13 @@ External services are not configured by default. This is intentional: no product
 
 Palette: #0B1F33, #123A5A, #00A8E8, #F5F8FA. Layouts include editorial service panels, destination photography, fleet cards, route lists and fare tables. Motion respects reduced-motion preferences. Text remains readable before animations run. System fonts avoid build-time font-network dependencies.
 
-Hero and airport photographs: AI-generated for this project. Destination and example vehicle images: recompressed assets from the supplied original project; confirm reuse rights before public launch. No fabricated statistics or customer reviews are displayed. The traveller-stories section invites authentic feedback.
+Homepage and page banners, plus the logo, are copied from the supplied original project. Destination and example vehicle images: recompressed assets from the supplied original project; confirm reuse rights before public launch. No fabricated statistics or customer reviews are displayed. The traveller-stories section invites authentic feedback.
 
 ## Deployment
 
 Build with `npm run build`; run with `npm start` (port 3000). Next.js standalone output is enabled. The Dockerfile accepts public build-time variables; pass server-only secrets at runtime. Place behind HTTPS, validate the contact details/domain, and test Maps and Telegram with isolated test accounts before launch. The service worker is network-only; offline booking is not supported.
 
+
+## Original website content
+
+The navigation retains Home, About, Services, Tariff, Routes and Contact Us, including /about-us, /service-routes and /contact-us. The homepage includes the complete shared booking form. Original logo and page-specific banner files are in public/images. The footer keeps the original service cities, contact details, social links and developer credit, with the navy/cyan styling. Social profile URLs are carried over from the original source and should be verified by the operator.

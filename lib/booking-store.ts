@@ -17,7 +17,7 @@ export function saveBooking(data: SavedBooking) {
   volatile = JSON.stringify(data); try { sessionStorage.setItem(key, volatile); } catch { /* In-memory recovery if storage is unavailable. */ }
   for (const callback of listeners) callback();
 }
-export function beginBooking(form: TripForm) { saveBooking({ form, requestId: crypto.randomUUID(), expires: Date.now() + 2 * 60 * 60 * 1000 }); }
+export function beginBooking(form: TripForm, requestId = crypto.randomUUID()) { const booking = { form, requestId, expires: Date.now() + 2 * 60 * 60 * 1000 }; saveBooking(booking); return booking; }
 export function useSavedBooking() {
   const raw = useSyncExternalStore(subscribe, snapshot, () => null);
   return useMemo(() => {
