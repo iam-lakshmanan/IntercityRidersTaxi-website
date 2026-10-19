@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
   icons: { icon: '/icon.svg', apple: '/icons/icon-192.png' },
 };
-export const viewport: Viewport = { themeColor: '#0B1F33', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#061728', width: 'device-width', initialScale: 1 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body className="site-shell"><MotionProvider><a className="skip-link" href="#main-content">Skip to content</a><Header /><main id="main-content" className="site-main">{children}</main><Footer /></MotionProvider></body></html>;
 }

@@ -35,7 +35,7 @@ External services are not configured by default. This is intentional: no product
 
 ## Design and assets
 
-Palette: #0B1F33, #123A5A, #00A8E8, #F5F8FA. Layouts include editorial service panels, destination photography, fleet cards, route lists and fare tables. Motion respects reduced-motion preferences. Text remains readable before animations run. System fonts avoid build-time font-network dependencies.
+Palette: #061728, #123A5A, #00A8E8, #F5F8FA. Layouts include editorial service panels, destination photography, fleet cards, route lists and fare tables. Motion respects reduced-motion preferences. Text remains readable before animations run. System fonts avoid build-time font-network dependencies.
 
 Homepage and page banners, plus the logo, are copied from the supplied original project. Destination and example vehicle images: recompressed assets from the supplied original project; confirm reuse rights before public launch. No fabricated statistics or customer reviews are displayed. The traveller-stories section invites authentic feedback.
 
