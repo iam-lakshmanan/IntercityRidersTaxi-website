@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Header, Footer } from '@/components/shell';
 import { MotionProvider } from '@/components/motion';
 import { site } from '@/lib/site';
+import { PwaRegister } from '@/components/pwa-register';
 import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -10,9 +11,9 @@ export const metadata: Metadata = {
   applicationName: site.name,
   openGraph: { type: 'website', locale: 'en_IN', siteName: site.name, images: [{ url: '/images/BANNERIMAGE.jpg', width: 1600, height: 755, alt: 'Intercity taxi fleet' }] },
   twitter: { card: 'summary_large_image' },
-  icons: { icon: '/images/car-logo3-transparent.png', shortcut: '/images/car-logo3-transparent.png', apple: '/images/car-logo3.png' },
+  icons: { icon: '/icons/icon-192.png', shortcut: '/icons/icon-192.png', apple: '/icons/icon-192.png' },
 };
 export const viewport: Viewport = { themeColor: '#061728', width: 'device-width', initialScale: 1 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className="site-shell"><MotionProvider><a className="skip-link" href="#main-content">Skip to content</a><Header /><main id="main-content" className="site-main">{children}</main><Footer /></MotionProvider></body></html>;
+  return <html lang="en"><body className="site-shell"><MotionProvider><a className="skip-link" href="#main-content">Skip to content</a><Header /><main id="main-content" className="site-main">{children}</main><Footer /><PwaRegister /></MotionProvider></body></html>;
 }
