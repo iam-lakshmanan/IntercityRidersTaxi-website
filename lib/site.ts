@@ -1,6 +1,6 @@
 export const site = {
   name: 'Intercity Riders',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://intercityriders.example',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://intercityonewaytaxi.in',
   phone: process.env.NEXT_PUBLIC_PHONE || '+919944942223',
   email: process.env.NEXT_PUBLIC_EMAIL || 'info@onewaytaxi.com',
   location: 'Tamil Nadu, India',

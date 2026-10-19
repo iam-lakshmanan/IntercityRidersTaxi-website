@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   applicationName: site.name,
   openGraph: { type: 'website', locale: 'en_IN', siteName: site.name, images: [{ url: '/images/BANNERIMAGE.jpg', width: 1600, height: 755, alt: 'Intercity taxi fleet' }] },
   twitter: { card: 'summary_large_image' },
-  icons: { icon: '/icon.svg', apple: '/icons/icon-192.png' },
+  icons: { icon: '/images/car-logo3-transparent.png', shortcut: '/images/car-logo3-transparent.png', apple: '/images/car-logo3.png' },
 };
 export const viewport: Viewport = { themeColor: '#061728', width: 'device-width', initialScale: 1 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
