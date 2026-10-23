@@ -1,7 +1,12 @@
 node_modules
 .next
 .git
-.env*
+.github
+.env
+.env.*
 !.env.example
 *.log
 *.tsbuildinfo
+coverage
+README.md
+DEPLOYMENT.md
